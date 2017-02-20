@@ -2,6 +2,7 @@
 import json
 from multiprocessing import Process
 import gevent
+from gevent.pool import Pool
 
 import requests
 import time
@@ -50,10 +51,11 @@ def validator(queue1, queue2, myip):
 
 
 def process_start(tasks, myip, queue2):
-    spawns = []
+    CONCURRENCY = 500
+    pool = Pool(CONCURRENCY)
     for task in tasks:
-        spawns.append(gevent.spawn(detect_proxy, myip, task, queue2))
-    gevent.joinall(spawns)
+        pool.spawn(detect_proxy, myip, task, queue2)
+    pool.join(timeout=360)
 
 
 def detect_proxy(selfip, proxy, queue2=None):
