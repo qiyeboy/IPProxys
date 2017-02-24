@@ -1,17 +1,18 @@
 # coding:utf-8
-import json
-from multiprocessing import Process
-import gevent
+from gevent import monkey
+monkey.patch_all(thread=False)
+# monkey.patch_all()
 
-import requests
+import json
 import time
+import requests
+
+from multiprocessing import Process
+from gevent.pool import Pool
+
 import config
 from db.DataStore import sqlhelper
 from util.exception import Test_URL_Fail
-
-from gevent import monkey
-
-monkey.patch_all()
 
 
 def detect_from_db(myip, proxy, proxies_set):
@@ -50,10 +51,11 @@ def validator(queue1, queue2, myip):
 
 
 def process_start(tasks, myip, queue2):
-    spawns = []
+    CONCURRENCY = 500
+    pool = Pool(CONCURRENCY)
     for task in tasks:
-        spawns.append(gevent.spawn(detect_proxy, myip, task, queue2))
-    gevent.joinall(spawns)
+        pool.spawn(detect_proxy, myip, task, queue2)
+    pool.join(timeout=360)
 
 
 def detect_proxy(selfip, proxy, queue2=None):
@@ -65,7 +67,7 @@ def detect_proxy(selfip, proxy, queue2=None):
     port = proxy['port']
     proxies = {"http": "http://%s:%s" % (ip, port), "https": "http://%s:%s" % (ip, port)}
     protocol, types, speed = checkProxy(selfip, proxies)
-    if protocol > 0:
+    if protocol >= 0:
         proxy['protocol'] = protocol
         proxy['type'] = types
         proxy['speed'] = speed
