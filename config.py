@@ -200,3 +200,8 @@ CHECK_PROXY={'function':'checkProxy'}#{'function':'baidu_check'}
 
 #下面配置squid,现在还没实现
 #SQUID={'path':None,'confpath':'C:/squid/etc/squid.conf'}
+
+
+MAX_CHECK_CURRENT = 30 # CHECK_PROXY时的最大并发
+TASK_QUEUE_SIZE = 50 # 任务队列SIZE
+MAX_DOWNLOAD_CURRENT = 3#从免费代理网站下载时的最大并发 

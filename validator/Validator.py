@@ -43,12 +43,13 @@ def validator(queue1, queue2, myip):
     while True:
         try:
             # proxy_dict = {'source':'crawl','data':proxy}
-            proxy = queue1.get(timeout=10)
+            proxy = queue1.get()
             tasklist.append(proxy)
-            if len(tasklist) > 500:
-                p = Process(target=process_start, args=(tasklist, myip, queue2, cntl_q))
-                p.start()
-                proc_pool[p.pid] = p
+            if len(tasklist) >= config.MAX_CHECK_CURRENT:
+                normal_start(tasklist, myip, queue2)
+                # p = Process(target=process_start, args=(tasklist, myip, queue2, cntl_q))
+                # p.start()
+                # proc_pool[p.pid] = p
                 tasklist = []
 
         except Exception as e:
@@ -71,6 +72,12 @@ def validator(queue1, queue2, myip):
                 # print(e)
                 # print(" we are unable to kill pid:%s" % (pid))
 
+
+def normal_start(tasks, myip, queue2):
+    spawns = []
+    for task in tasks:
+        spawns.append(gevent.spawn(detect_proxy, myip, task, queue2))
+    gevent.joinall(spawns)
 
 def process_start(tasks, myip, queue2, cntl):
     spawns = []
