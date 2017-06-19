@@ -40,8 +40,8 @@ apt-get install python-lxml
 
 1.下载[sqlite](http://www.sqlite.org/download.html),路径添加到环境变量
 <br/>
-2.安装requests,chardet,web.py,gevent:
-pip install requests chardet web.py sqlalchemy gevent
+2.安装requests,chardet,web.py,gevent,validator,psutil:
+pip install requests chardet web.py sqlalchemy gevent validator psutil
 <br/>
 3.安装lxml:
 pip install lxml或者下载[lxml windows版](https://pypi.python.org/pypi/lxml/)
