@@ -1,4 +1,4 @@
-﻿# IPProxyPool
+# IPProxyPool
 IPProxyPool代理池项目，提供代理ip。支持py2和py3两个版本。
 ### 我的新书[《Python爬虫开发与项目实战》](https://item.jd.com/12206762.html)出版了,喜欢的话可以看一下[样章](http://pan.baidu.com/s/1hrWEOYg)
 <br/>
