@@ -1,5 +1,6 @@
 # coding:utf-8
 import datetime
+import sqlalchemy
 from sqlalchemy import Column, Integer, String, DateTime, Numeric, create_engine, VARCHAR
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -54,8 +55,15 @@ class SqlHelper(ISqlHelper):
         proxy = Proxy(ip=value['ip'], port=value['port'], types=value['types'], protocol=value['protocol'],
                       country=value['country'],
                       area=value['area'], speed=value['speed'])
-        self.session.add(proxy)
-        self.session.commit()
+        try:
+            self.session.add(proxy)
+            self.session.commit()
+        except sqlalchemy.exc.IntegrityError as e:
+            # catch duplicate entry error and init score with DEFAULT_SCORE
+            print(str(e))
+            self.session.rollback()
+            self.update({"ip": value['ip'], "port": value['port']}, {"score" :DEFAULT_SCORE})
+         
 
 
     def delete(self, conditions=None):
