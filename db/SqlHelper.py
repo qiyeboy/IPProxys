@@ -40,7 +40,7 @@ class SqlHelper(ISqlHelper):
             connect_args = {'check_same_thread': False}
             self.engine = create_engine(DB_CONFIG['DB_CONNECT_STRING'], echo=False, connect_args=connect_args)
         else:
-            self.engine = create_engine(DB_CONFIG['DB_CONNECT_STRING'], echo=False)
+            self.engine = create_engine(DB_CONFIG['DB_CONNECT_STRING'], echo=False, pool_size=20, pool_recycle=3600)
         DB_Session = sessionmaker(bind=self.engine)
         self.session = DB_Session()
 
