@@ -24,13 +24,13 @@ parserList = [
         'pattern': ".//*[@id='footer']/div/table/tr[position()>1]",
         'position': {'ip': './td[1]', 'port': './td[2]', 'type': './td[4]', 'protocol': ''}
     },
-    {
-        'urls': ['http://cn-proxy.com/', 'http://cn-proxy.com/archives/218'],
-        'type': 'xpath',
-        'pattern': ".//table[@class='sortable']/tbody/tr",
-        'position': {'ip': './td[1]', 'port': './td[2]', 'type': '', 'protocol': ''}
-
-    },
+#    {
+#        'urls': ['http://cn-proxy.com/', 'http://cn-proxy.com/archives/218'],
+#        'type': 'xpath',
+#        'pattern': ".//table[@class='sortable']/tbody/tr",
+#        'position': {'ip': './td[1]', 'port': './td[2]', 'type': '', 'protocol': ''}
+#
+#    },
     {
         'urls': ['http://www.mimiip.com/gngao/%s' % n for n in range(1, 10)],
         'type': 'xpath',
@@ -38,22 +38,22 @@ parserList = [
         'position': {'ip': './td[1]', 'port': './td[2]', 'type': '', 'protocol': ''}
 
     },
-    {
-        'urls': ['https://proxy-list.org/english/index.php?p=%s' % n for n in range(1, 10)],
-        'type': 'module',
-        'moduleName': 'proxy_listPraser',
-        'pattern': 'Proxy\(.+\)',
-        'position': {'ip': 0, 'port': -1, 'type': -1, 'protocol': 2}
-
-    },
-    {
-        'urls': ['http://incloak.com/proxy-list/%s#list' % n for n in
-                 ([''] + ['?start=%s' % (64 * m) for m in range(1, 10)])],
-        'type': 'xpath',
-        'pattern': ".//table[@class='proxy__t']/tbody/tr",
-        'position': {'ip': './td[1]', 'port': './td[2]', 'type': '', 'protocol': ''}
-
-    },
+#    {
+#        'urls': ['https://proxy-list.org/english/index.php?p=%s' % n for n in range(1, 10)],
+#        'type': 'module',
+#        'moduleName': 'proxy_listPraser',
+#        'pattern': 'Proxy\(.+\)',
+#        'position': {'ip': 0, 'port': -1, 'type': -1, 'protocol': 2}
+#
+#    },
+#    {
+#        'urls': ['http://incloak.com/proxy-list/%s#list' % n for n in
+#                 ([''] + ['?start=%s' % (64 * m) for m in range(1, 10)])],
+#        'type': 'xpath',
+#        'pattern': ".//table[@class='proxy__t']/tbody/tr",
+#        'position': {'ip': './td[1]', 'port': './td[2]', 'type': '', 'protocol': ''}
+#
+#    },
     {
         'urls': ['http://www.kuaidaili.com/proxylist/%s/' % n for n in range(1, 11)],
         'type': 'xpath',
@@ -88,13 +88,13 @@ parserList = [
         'pattern': ".//*[@id='ip_list']/tr[position()>1]",
         'position': {'ip': './td[2]', 'port': './td[3]', 'type': './td[5]', 'protocol': './td[6]'}
     },
-    {
-        'urls': ['http://www.cnproxy.com/proxy%s.html' % i for i in range(1, 11)],
-        'type': 'module',
-        'moduleName': 'CnproxyPraser',
-        'pattern': r'<tr><td>(\d+\.\d+\.\d+\.\d+)<SCRIPT type=text/javascript>document.write\(\"\:\"(.+)\)</SCRIPT></td><td>(HTTP|SOCKS4)\s*',
-        'position': {'ip': 0, 'port': 1, 'type': -1, 'protocol': 2}
-    }
+#    {
+#        'urls': ['http://www.cnproxy.com/proxy%s.html' % i for i in range(1, 11)],
+#        'type': 'module',
+#        'moduleName': 'CnproxyPraser',
+#        'pattern': r'<tr><td>(\d+\.\d+\.\d+\.\d+)<SCRIPT type=text/javascript>document.write\(\"\:\"(.+)\)</SCRIPT></td><td>(HTTP|SOCKS4)\s*',
+#        'position': {'ip': 0, 'port': 1, 'type': -1, 'protocol': 2}
+#    }
 ]
 '''
 数据库的配置
@@ -183,7 +183,7 @@ def get_header():
         'Connection': 'keep-alive',
         'Accept-Encoding': 'gzip, deflate',
     }
-#默认给抓取的ip分配20分,每次连接失败,减一分,直到分数全部扣完从数据库中删除
+#默认给抓取的ip分配10分,每次连接失败,减一分,直到分数全部扣完从数据库中删除
 DEFAULT_SCORE=10
 
 TEST_URL = 'http://ip.chinaz.com/getip.aspx'
