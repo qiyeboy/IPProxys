@@ -1,3 +1,6 @@
+from gevent import monkey
+monkey.patch_all()
+
 import pymongo
 from config import DB_CONFIG, DEFAULT_SCORE
 
