@@ -106,8 +106,9 @@ except Exception,e:
 ## 如何使用
 
 将项目目录clone到当前文件夹
-
-$ git clone 
+```
+$ git clone https://github.com/qiyeboy/IPProxyPool.git
+```
 
 切换工程目录
 
