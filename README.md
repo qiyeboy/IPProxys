@@ -22,13 +22,23 @@ http://www.cnblogs.com/qiyeboy/p/5693128.html
 #### Ubuntu,debian
 
 1.安装sqlite数据库(一般系统内置):
+```
 apt-get install sqlite3
+```
+
 <br/>
-2.安装requests,chardet,web.py,gevent psutil:
+2.安装requests,chardet,web.py,gevent, psutil:
+
+```
 pip install requests chardet web.py sqlalchemy gevent psutil
+```
 <br/>
 3.安装lxml:
+
+```
 apt-get install python-lxml
+```
+
 <br/>
 注意：
 
@@ -41,11 +51,12 @@ apt-get install python-lxml
 1.下载[sqlite](http://www.sqlite.org/download.html),路径添加到环境变量
 <br/>
 2.安装requests,chardet,web.py,gevent:
-pip install requests chardet web.py sqlalchemy gevent
+
+```
+pip install requests chardet web.py sqlalchemy gevent lxml
+```
 <br/>
-3.安装lxml:
-pip install lxml或者下载[lxml windows版](https://pypi.python.org/pypi/lxml/)
-<br/>
+
 注意：
 
 * python3下的是pip3
