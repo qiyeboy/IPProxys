@@ -118,6 +118,15 @@ CHINA_AREA = ['河北', '山东', '辽宁', '黑龙江', '吉林'
 QQWRY_PATH = os.path.dirname(__file__) + "/data/qqwry.dat"
 THREADNUM = 5
 API_PORT = 8000
+
+class POWER_CONFIG(object):
+    bind = '127.0.0.1'
+    port = 8888
+    username = ''
+    password = ''
+    debug = False
+    config = ''
+    forward = True
 '''
 爬虫爬取和检测ip的设置条件
 不需要检测ip是否已经存在，因为会定时清理
