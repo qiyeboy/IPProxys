@@ -1,4 +1,4 @@
-﻿# IPProxyPool
+# IPProxyPool
 IPProxyPool代理池项目，提供代理ip。支持py2和py3两个版本。
 ### 我的新书[《Python爬虫开发与项目实战》](https://item.jd.com/12206762.html)出版了,喜欢的话可以看一下[样章](http://pan.baidu.com/s/1hrWEOYg)
 <br/>
@@ -40,8 +40,8 @@ apt-get install python-lxml
 
 1.下载[sqlite](http://www.sqlite.org/download.html),路径添加到环境变量
 <br/>
-2.安装requests,chardet,web.py,gevent:
-pip install requests chardet web.py sqlalchemy gevent
+2.安装requests,chardet,web.py,gevent,validator,psutil:
+pip install requests chardet web.py sqlalchemy gevent validator psutil
 <br/>
 3.安装lxml:
 pip install lxml或者下载[lxml windows版](https://pypi.python.org/pypi/lxml/)
