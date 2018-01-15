@@ -1,5 +1,6 @@
 # coding:utf-8
 import datetime
+import sqlalchemy
 from sqlalchemy import Column, Integer, String, DateTime, Numeric, create_engine, VARCHAR
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -39,7 +40,7 @@ class SqlHelper(ISqlHelper):
             connect_args = {'check_same_thread': False}
             self.engine = create_engine(DB_CONFIG['DB_CONNECT_STRING'], echo=False, connect_args=connect_args)
         else:
-            self.engine = create_engine(DB_CONFIG['DB_CONNECT_STRING'], echo=False)
+            self.engine = create_engine(DB_CONFIG['DB_CONNECT_STRING'], echo=False, pool_size=20, pool_recycle=3600)
         DB_Session = sessionmaker(bind=self.engine)
         self.session = DB_Session()
 
@@ -54,8 +55,15 @@ class SqlHelper(ISqlHelper):
         proxy = Proxy(ip=value['ip'], port=value['port'], types=value['types'], protocol=value['protocol'],
                       country=value['country'],
                       area=value['area'], speed=value['speed'])
-        self.session.add(proxy)
-        self.session.commit()
+        try:
+            self.session.add(proxy)
+            self.session.commit()
+        except sqlalchemy.exc.IntegrityError as e:
+            # catch duplicate entry error and init score with DEFAULT_SCORE
+            print(str(e))
+            self.session.rollback()
+            self.update({"ip": value['ip'], "port": value['port']}, {"score" :DEFAULT_SCORE})
+         
 
 
     def delete(self, conditions=None):
