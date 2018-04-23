@@ -211,8 +211,27 @@ def getMyIP():
     except Exception as e:
         raise Test_URL_Fail
 
+def bloodwow_check(selfip,proxies):
+    try:
+        start = time.time()
+        r = requests.get(url='http://dx.blood-wow.com:85/', headers=config.get_header(), timeout=config.TIMEOUT, proxies=proxies)
+        r.encoding = chardet.detect(r.content)['encoding']
+        if r.ok:
+            speed = round(time.time() - start, 2)
+            protocol= 0
+            types=0
 
-if __name__ == '__main__':
+        else:
+            speed = -1
+            protocol= -1
+            types=-1
+    except Exception as e:
+            speed = -1
+            protocol = -1
+            types = -1
+    return protocol, types, speed
+
+if  __name__ == '__main__':
     ip = '222.186.161.132'
     port = 3128
     proxies = {"http": "http://%s:%s" % (ip, port), "https": "http://%s:%s" % (ip, port)}
