@@ -140,7 +140,7 @@ class SqlHelper(ISqlHelper):
 if __name__ == '__main__':
     sqlhelper = SqlHelper()
     sqlhelper.init_db()
-    proxy = {'ip': '192.168.1.1', 'port': 80, 'type': 0, 'protocol': 0, 'country': '中国', 'area': '广州', 'speed': 11.123, 'types': ''}
+    proxy = {'ip': '192.168.1.1', 'port': 80, 'type': 0, 'protocol': 0, 'country': 'cn', 'area': 'gz', 'speed': 11.123, 'types': ''}
     sqlhelper.insert(proxy)
     sqlhelper.update({'ip': '192.168.1.1', 'port': 80}, {'score': 10})
     print(sqlhelper.select(1))

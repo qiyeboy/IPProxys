@@ -1,5 +1,10 @@
 # coding:utf-8
-import sys
+import sys,os
+
+BASE_DIR = os.path.dirname(os.path.dirname((os.path.abspath(__file__))))
+if BASE_DIR not in sys.path:
+    sys.path.append(BASE_DIR)
+
 from config import DB_CONFIG
 from util.exception import Con_DB_Fail
 
