@@ -1,14 +1,14 @@
 FROM alpine:edge
 
-RUN apk add --update python2 python2-dev py2-pip py2-lxml sqlite gcc musl-dev && \
+RUN apk add --update python2 python2-dev linux-headers musl musl-dev gcc py2-pip py2-lxml sqlite ;\
 	pip install --upgrade pip && \
-	pip install requests chardet gevent && \
+	pip install requests chardet web.py sqlalchemy gevent psutil ;\
 	apk del gcc python2-dev && \
 	rm -fr /var/cache
 
 COPY . /opt/IPProxyPool
 WORKDIR /opt/IPProxyPool
 
-EXPOSE 8080
+EXPOSE 8000
 
-CMD ["python", "IPProxys.py"]
+CMD ["python", "./IPProxy.py"]
