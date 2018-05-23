@@ -105,6 +105,8 @@ except Exception,e:
 
 ## 如何使用
 
+### 本地使用
+
 将项目目录clone到当前文件夹
 
 $ git clone 
@@ -127,6 +129,18 @@ http://0.0.0.0:8000/
 IPProxyPool----->>>>>>>>db exists ip:0
 IPProxyPool----->>>>>>>>now ip num < MINNUM,start crawling...
 IPProxyPool----->>>>>>>>Success ip num :134,Fail ip num:7882
+```
+
+### 使用docker容器
+
+$ git clone 
+
+切换工程目录
+
+```
+$ cd IPProxys
+$ docker build -t ipproxy .
+$ docker run --name ipProxyPool -d -p 8080:8080 ipproxy
 ```
 
 ## API 使用方法
