@@ -1,4 +1,7 @@
-﻿# IPProxyPool
+﻿# 修改
+添加了socks4/5支持，添加了多个源
+
+# IPProxyPool
 IPProxyPool代理池项目，提供代理ip。支持py2和py3两个版本。
 ### 我的新书[《Python爬虫开发与项目实战》](https://item.jd.com/12206762.html)出版了,喜欢的话可以看一下[样章](http://pan.baidu.com/s/1hrWEOYg)
 <br/>
@@ -142,7 +145,7 @@ GET /
 | Name | Type | Description |
 | ----| ---- | ---- |
 | types | int | 0: 高匿,1:匿名,2 透明 |
-| protocol | int | 0: http, 1 https, 2 http/https |
+| protocol | int | 0: http, 1: https, 2: http/https, 3: socks4, 4: socks5 |
 | count | int | 数量 |
 | country | str | 取值为 国内, 国外 |
 | area | str | 地区 |
@@ -163,7 +166,7 @@ GET /
 [["122.226.189.55", 138, 10], ["183.61.236.54", 3128, 10], ["61.132.241.109", 808, 10], ["183.61.236.53", 3128, 10], ["122.227.246.102", 808, 10]]
 ```
 <br/>
-以["122.226.189.55", 138, 10]为例，第一个元素是ip,第二个元素是port，第三个元素是分值score。
+以["122.226.189.55", 138, 10]为例，第一个元素是ip,第二个元素是port，第三个元素是分值protocol，第四个元素是分值score。
 
 ```
 import requests
@@ -194,7 +197,7 @@ GET /delete
 | ip | str | 类似192.168.1.1 |
 | port | int | 类似 80 |
 | types | int |  0: 高匿,1:匿名,2 透明 |
-| protocol | int | 0: http, 1 https, 2 http/https |
+| protocol | int | 0: http, 1: https, 2: http/https, 3: socks4, 4: socks5 |
 | count | int | 数量 |
 | country | str | 取值为 国内, 国外 |
 | area | str | 地区 |
@@ -263,6 +266,9 @@ UPDATE_TIME = 30 * 60
 
 # 当有效的ip值小于MINNUM时 需要启动爬虫进行爬取
 MINNUM = 50  
+
+# 强制重新爬取时间,默认两天,0:不强制重新爬取
+FORCE_CRAWL_TIME = 60*60*24*2  
 
 # socket超时
 TIMEOUT = 5 
