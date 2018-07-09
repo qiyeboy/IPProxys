@@ -88,8 +88,7 @@ def detect_proxy(selfip, proxy, queue2=None):
     '''
     ip = proxy['ip']
     port = proxy['port']
-    proxies = {"http": "http://%s:%s" % (ip, port), "https": "http://%s:%s" % (ip, port)}
-    protocol, types, speed = getattr(sys.modules[__name__],config.CHECK_PROXY['function'])(selfip, proxies)#checkProxy(selfip, proxies)
+    protocol, types, speed = getattr(sys.modules[__name__],config.CHECK_PROXY['function'])(selfip, ip, port)#checkProxy(selfip, proxies)
     if protocol >= 0:
         proxy['protocol'] = protocol
         proxy['types'] = types
@@ -101,7 +100,7 @@ def detect_proxy(selfip, proxy, queue2=None):
     return proxy
 
 
-def checkProxy(selfip, proxies):
+def checkProxy(selfip, ip, port):
     '''
     用来检测代理的类型，突然发现，免费网站写的信息不靠谱，还是要自己检测代理的类型
     :param
@@ -110,6 +109,7 @@ def checkProxy(selfip, proxies):
     protocol = -1
     types = -1
     speed = -1
+    proxies = {"http": "http://%s:%s" % (ip, port), "https": "http://%s:%s" % (ip, port)}
     http, http_types, http_speed = _checkHttpProxy(selfip, proxies)
     https, https_types, https_speed = _checkHttpProxy(selfip, proxies, False)
     if http and https:
@@ -125,9 +125,16 @@ def checkProxy(selfip, proxies):
         protocol = 1
         speed = https_speed
     else:
-        types = -1
-        protocol = -1
-        speed = -1
+        proxies = {"http": "socks5://%s:%s" % (ip, port), "https": "socks5://%s:%s" % (ip, port)}
+        socks5, socks5_types, socks5_speed = _checkHttpProxy(selfip, proxies)
+        if socks5:
+            types = socks5_types
+            protocol = 3
+            speed = socks5_speed
+        else:
+            types = -1
+            protocol = -1
+            speed = -1
     return protocol, types, speed
 
 

@@ -118,7 +118,7 @@ class SqlHelper(ISqlHelper):
         else:
             conditions = []
 
-        query = self.session.query(Proxy.ip, Proxy.port, Proxy.score)
+        query = self.session.query(Proxy.ip, Proxy.port, Proxy.protocol, Proxy.score)
         if len(conditions) > 0 and count:
             for condition in conditions:
                 query = query.filter(condition)

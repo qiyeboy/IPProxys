@@ -25,6 +25,12 @@ parserList = [
         'position': {'ip': './td[1]', 'port': './td[2]', 'type': './td[4]', 'protocol': ''}
     },
     {
+        'urls': ['http://www.proxylists.net/proxylists.xml'],
+        'type': 'xpath',
+        'pattern': ".//proxy[position()>1]",
+        'position': {'ip': './ip', 'port': './port', 'type': '', 'protocol': ''}
+    },
+    {
         'urls': ['http://cn-proxy.com/', 'http://cn-proxy.com/archives/218'],
         'type': 'xpath',
         'pattern': ".//table[@class='sortable']/tbody/tr",
@@ -94,12 +100,6 @@ parserList = [
         'moduleName': 'CnproxyPraser',
         'pattern': r'<tr><td>(\d+\.\d+\.\d+\.\d+)<SCRIPT type=text/javascript>document.write\(\"\:\"(.+)\)</SCRIPT></td><td>(HTTP|SOCKS4)\s*',
         'position': {'ip': 0, 'port': 1, 'type': -1, 'protocol': 2}
-    },
-    {
-        'urls': ['http://www.proxylists.net/proxylists.xml'],
-        'type': 'xpath',
-        'pattern': ".//proxy[position()>1]",
-        'position': {'ip': './ip', 'port': './port', 'type': '', 'protocol': ''}
     },
     {
         'urls': ['https://www.xroxy.com/proxyrss.xml'],

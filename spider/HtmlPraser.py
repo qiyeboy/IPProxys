@@ -49,7 +49,10 @@ class Html_Parser(object):
         :return:
         '''
         proxylist = []
-        root = etree.HTML(response)
+        try:
+            root = etree.HTML(response)
+        except:
+            root = etree.HTML(bytes(bytearray(response, encoding='utf-8')))
         proxys = root.xpath(parser['pattern'])
         for proxy in proxys:
             try:
