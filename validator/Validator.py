@@ -129,12 +129,19 @@ def checkProxy(selfip, ip, port):
         socks5, socks5_types, socks5_speed = _checkHttpProxy(selfip, proxies)
         if socks5:
             types = socks5_types
-            protocol = 3
+            protocol = 4
             speed = socks5_speed
         else:
-            types = -1
-            protocol = -1
-            speed = -1
+            proxies = {"http": "socks4://%s:%s" % (ip, port), "https": "socks4://%s:%s" % (ip, port)}
+            socks4, socks4_types, socks4_speed = _checkHttpProxy(selfip, proxies)
+            if socks4:
+                types = socks4_types
+                protocol = 3
+                speed = socks4_speed
+            else:
+                types = -1
+                protocol = -1
+                speed = -1
     return protocol, types, speed
 
 

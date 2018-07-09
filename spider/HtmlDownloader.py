@@ -24,7 +24,7 @@ class Html_Downloader(object):
 
         except Exception:
             count = 0  # 重试次数
-            proxylist = sqlhelper.select(10)
+            proxylist = sqlhelper.select(10,{'protocol':2})
             if not proxylist:
                 return None
 
