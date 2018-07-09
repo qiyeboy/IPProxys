@@ -94,7 +94,13 @@ parserList = [
         'moduleName': 'CnproxyPraser',
         'pattern': r'<tr><td>(\d+\.\d+\.\d+\.\d+)<SCRIPT type=text/javascript>document.write\(\"\:\"(.+)\)</SCRIPT></td><td>(HTTP|SOCKS4)\s*',
         'position': {'ip': 0, 'port': 1, 'type': -1, 'protocol': 2}
-    }
+    },
+    {
+        'urls': ['http://www.proxylists.net/proxylists.xml'],
+        'type': 'xpath',
+        'pattern': ".//proxy[position()>1]",
+        'position': {'ip': './ip', 'port': './port', 'type': '', 'protocol': ''}
+    },
 ]
 '''
 数据库的配置
@@ -117,7 +123,8 @@ CHINA_AREA = ['河北', '山东', '辽宁', '黑龙江', '吉林'
               '贵州', '安徽', '重庆', '北京', '上海', '天津', '广西', '内蒙', '西藏', '新疆', '宁夏', '香港', '澳门']
 QQWRY_PATH = os.path.dirname(__file__) + "/data/qqwry.dat"
 THREADNUM = 5
-API_PORT = 8000
+#API_PORT = 8000
+API_PORT = 8765
 '''
 爬虫爬取和检测ip的设置条件
 不需要检测ip是否已经存在，因为会定时清理
@@ -204,5 +211,5 @@ CHECK_PROXY={'function':'checkProxy'}#{'function':'baidu_check'}
 MAX_CHECK_PROCESS = 2 # CHECK_PROXY最大进程数
 MAX_CHECK_CONCURRENT_PER_PROCESS = 30 # CHECK_PROXY时每个进程的最大并发
 TASK_QUEUE_SIZE = 50 # 任务队列SIZE
-MAX_DOWNLOAD_CONCURRENT = 3 # 从免费代理网站下载时的最大并发 
+MAX_DOWNLOAD_CONCURRENT = 3 # 从免费代理网站下载时的最大并发
 CHECK_WATI_TIME = 1#进程数达到上限时的等待时间
