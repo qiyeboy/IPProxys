@@ -56,6 +56,7 @@ class ProxyCrawl(object):
             str = 'IPProxyPool----->>>>>>>>db exists ip:%d' % len(self.proxies)
 
             if len(self.proxies) < MINNUM or (FORCE_CRAWL_TIME and time.time()-self.crawl_time>FORCE_CRAWL_TIME):
+                self.crawl_time=time.time()
                 str += '\r\nIPProxyPool----->>>>>>>>now ip num < MINNUM,start crawling...'
                 sys.stdout.write(str + "\r\n")
                 sys.stdout.flush()
