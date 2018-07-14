@@ -19,6 +19,33 @@ parserList = [
         'position': {'ip': './td[1]', 'port': './td[2]', 'type': './td[4]', 'protocol': ''}
     },
     {
+        'urls': ['https://www.socks-proxy.net'],
+        'type': 'xpath',
+        'pattern': ".//*[@id='proxylisttable']/tr[position()>1]",
+        'position': {'ip': './td[1]', 'port': './td[2]', 'type': '', 'protocol': ''}
+    },
+    {
+        'urls': ['http://www.proxylists.net/proxylists.xml'],
+        'type': 'xpath',
+        'pattern': ".//proxy[position()>1]",
+        'position': {'ip': './ip', 'port': './port', 'type': '', 'protocol': ''}
+    },
+    {
+        'urls': ['http://31f.cn'+n for n in ['','/http-proxy/',
+                                             '/https-proxy/','/socks-proxy/']+
+                 ['/region/'+a+'/' for a in ['安徽','广东','江苏','北京','浙江','山东','上海','湖南',
+                                             '河南','辽宁','四川','湖北','福建','河北','吉林','江西',
+                                             '山西','重庆','陕西','内蒙古','天津','云南','西藏','广西']]+
+                 ['/city/'+a+'/' for a in ['淮南','北京','深圳','杭州','上海','广州','苏州',
+                                           '常德','南京','青岛','成都','武汉','南通','东莞',
+                                           '合肥','重庆','连云港','长春','天津','长沙','焦作',
+                                           '佛山','常州','济南','大连','西安','郑州','无锡','石家庄',
+                                           '镇江','嘉兴','徐州','芜湖','金华','朝阳','福州']]],
+        'type': 'xpath',
+        'pattern': ".//table[1]/tr[position()>1]",
+        'position': {'ip': './td[2]', 'port': './td[3]', 'type': '', 'protocol': ''}
+    },
+    {
         'urls': ['http://www.66ip.cn/areaindex_%s/%s.html' % (m, n) for m in range(1, 35) for n in range(1, 10)],
         'type': 'xpath',
         'pattern': ".//*[@id='footer']/div/table/tr[position()>1]",
@@ -94,7 +121,13 @@ parserList = [
         'moduleName': 'CnproxyPraser',
         'pattern': r'<tr><td>(\d+\.\d+\.\d+\.\d+)<SCRIPT type=text/javascript>document.write\(\"\:\"(.+)\)</SCRIPT></td><td>(HTTP|SOCKS4)\s*',
         'position': {'ip': 0, 'port': 1, 'type': -1, 'protocol': 2}
-    }
+    },
+    {
+        'urls': ['https://www.xroxy.com/proxyrss.xml'],
+        'type': 'xpath',
+        'pattern': ".//proxy[position()>1]",
+        'position': {'ip': './ip', 'port': './port', 'type': '', 'protocol': ''}
+    },
 ]
 '''
 数据库的配置
@@ -117,13 +150,15 @@ CHINA_AREA = ['河北', '山东', '辽宁', '黑龙江', '吉林'
               '贵州', '安徽', '重庆', '北京', '上海', '天津', '广西', '内蒙', '西藏', '新疆', '宁夏', '香港', '澳门']
 QQWRY_PATH = os.path.dirname(__file__) + "/data/qqwry.dat"
 THREADNUM = 5
-API_PORT = 8000
+#API_PORT = 8000
+API_PORT = 8765
 '''
 爬虫爬取和检测ip的设置条件
 不需要检测ip是否已经存在，因为会定时清理
 '''
 UPDATE_TIME = 30 * 60  # 每半个小时检测一次是否有代理ip失效
-MINNUM = 50  # 当有效的ip值小于一个时 需要启动爬虫进行爬取
+MINNUM = 800  # 当有效的ip值小于一个时 需要启动爬虫进行爬取
+FORCE_CRAWL_TIME = 60*60*24*2  # 强制重新爬取时间,默认两天,0:不强制重新爬取
 
 TIMEOUT = 5  # socket延时
 '''
@@ -204,5 +239,5 @@ CHECK_PROXY={'function':'checkProxy'}#{'function':'baidu_check'}
 MAX_CHECK_PROCESS = 2 # CHECK_PROXY最大进程数
 MAX_CHECK_CONCURRENT_PER_PROCESS = 30 # CHECK_PROXY时每个进程的最大并发
 TASK_QUEUE_SIZE = 50 # 任务队列SIZE
-MAX_DOWNLOAD_CONCURRENT = 3 # 从免费代理网站下载时的最大并发 
+MAX_DOWNLOAD_CONCURRENT = 3 # 从免费代理网站下载时的最大并发
 CHECK_WATI_TIME = 1#进程数达到上限时的等待时间
